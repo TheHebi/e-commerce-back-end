@@ -25,7 +25,7 @@ ProductTag.init(
     },
   },
   {
-    sequelize,
+    sequelize
   }
 );
 
