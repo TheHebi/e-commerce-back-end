@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
       include: {model:Product, attributes: {exclude: [`createdAt`,`updatedAt`]}},
       attributes: {exclude: [`createdAt`,`updatedAt`]}
     })
-    res.status(200).json(category)
+    res.status(200).json({message:category ? res.json(category): `Category not found.`})
   }catch (err){
     res.status(500).json(err)
   }
@@ -48,7 +48,8 @@ router.put('/:id', async (req, res) => {
     const editCategory = await Category.update(req.body,{
       where: {id:req.params.id},
     })
-    res.status(200).json(editCategory)
+    console.log(editCategory)
+    res.status(200).json({message:editCategory[0] ? `Category updated!`: `Category not found.`})
   }catch(err){
     res.status(400).json(err)
   }
@@ -60,7 +61,8 @@ router.delete('/:id', async (req, res) => {
     const delCategory = await Category.destroy({
       where:{id:req.params.id}
     });
-    res.status(200).json(delCategory)
+    console.log(delCategory)
+    res.status(200).json({message:delCategory ? `Category deleted!`: `Category not found.`})
   }catch(err){
     res.status(400).json(err)
   }

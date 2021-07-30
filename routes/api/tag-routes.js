@@ -29,7 +29,7 @@ router.get('/:id', async (req, res) => {
       through:{attributes: {exclude: [`createdAt`,`updatedAt`]}},
       attributes: {exclude: [`createdAt`,`updatedAt`]}
     })
-    res.status(200).json(tag)
+    res.status(200).json({message:tag ? res.json(tag): `Tag not found.`})
   }catch (err){
     res.status(500).json(err)
   }
@@ -51,7 +51,7 @@ router.put('/:id', async (req, res) => {
     const editTag = await Tag.update(req.body,{
       where: {id:req.params.id},
     })
-    res.status(200).json(editTag)
+    res.status(200).json({message:editTag[0] ? `Tag updated`: `Tag not found.`})
   }catch(err){
     res.status(400).json(err)
   }
@@ -63,7 +63,7 @@ router.delete('/:id', async (req, res) => {
     const delTag = await Tag.destroy({
       where:{id:req.params.id}
     });
-    res.status(200).json(delTag)
+    res.status(200).json({message:delTag ? `Tag deleted!`: `Tag not found.`})
   }catch(err){
     res.status(400).json(err)
   }

@@ -34,7 +34,7 @@ router.get('/:id', async (req, res) => {
       
       attributes: {exclude: [`createdAt`,`updatedAt`]}
     })
-    res.status(200).json(product)
+    res.status(200).json({message:product ? res.json(product): `Product not found.`})
   }catch (err){
     res.status(500).json(err)
   }
@@ -110,7 +110,7 @@ router.put('/:id', (req, res) => {
     .then((updatedProductTags) => res.json(updatedProductTags))
     .catch((err) => {
       // console.log(err);
-      res.status(400).json(err);
+      res.status(404).json(err);
     });
 });
 
@@ -120,7 +120,7 @@ router.delete('/:id', async (req, res) => {
     const delProduct = await Product.destroy({
       where:{id:req.params.id}
     });
-    res.status(200).json(delProduct)
+    res.status(200).json({message:delProduct ? `Product deleted!` : `Product not found.`})
   }catch(err){
     res.status(400).json(err)
   }
